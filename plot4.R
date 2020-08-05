@@ -20,9 +20,10 @@ dt <- dt[, !(names(dt) %in% dropcols)]
 dt <- dt[with(dt,order(dt$datetime)),]
 #open a .png file device, resolution 480x480 pixels
 png(file="plot4.png", width=480, height=480);
+#set up a 2x2 set of plot areas
 par(mfrow=c(2,2));
-#perform the plot, with red-filled boxes, x labels, and title
 with(dt,
+     #Plot the global active power in top-left quadrant
      { plot(x=datetime,
             y=Global_active_power, 
             yaxt="n",
@@ -34,19 +35,17 @@ with(dt,
             cex.lab=0.8,
             cex.axis=0.8
        )
-       axis(side=2, at=c(0,2,4,6))
+       #set the scale ticks on the left
+       axis(side=2, at=seq(from=0,to=6,by=2))
+       #Perform the next plot in the top right quadrant
        plot(x=datetime,
             y=Voltage, 
             #yaxt="n",
             ylab="Voltage",
-            #xlab="",
             type="l",  #line plot
-            #ylim=c(0,8),
             pty="m"
-            #,
-            #cex.lab=0.8,
-            #cex.axis=0.8
        )
+       #perform the next plot (empty) in the bottom left quadrant
        plot(x=datetime,
             y=rep(NA,length(datetime)), 
             yaxt="n",
@@ -58,9 +57,16 @@ with(dt,
             cex.lab=0.9 #,
             #cex.axis=0.8
        )
+       #add a green line plot of sub metering 1, of width 5; could not determine
+       #what color the wide plot line was, so I set green.
+       lines(x=dt$datetime,
+             y=dt$Sub_metering_1,
+             col="green",
+             lwd=3)
+       #and plot the sub metering ranges in appropriate colors
        lines(x=datetime,
              y=dt$Sub_metering_1,
-             col="grey"
+             col="black"
        )
        lines(x=datetime,
              y=dt$Sub_metering_2,
@@ -70,23 +76,20 @@ with(dt,
              y=dt$Sub_metering_3,
              col="blue"
        )
-       axis(side=2, at=c(0,10,20,30))
+       #set the ticking and scale on the y axis
+       axis(side=2, at=seq(from=0,to=30,by=10))
+       #add an open legend, without a border
        legend("topright",
               legend=colnames(dt)[5:7],
               lty=1,
               bty="n",
-#              cex=0.95,
-              col=c("grey","red","blue"))
+              col=c("black","red","blue"))
+       #Perform the plot in the bottom right quadrant
        plot(x=datetime,
             y=Global_reactive_power, 
-#            yaxt="n",
-            #ylab="Global Reactive Power",
-#            xlab="",
             type="l",  #line plot
-#            ylim=c(0,8),
             pty="m",
-            cex.lab=0.8,
-            #cex.axis=0.8
+            cex.lab=0.8
        )
     }
 );

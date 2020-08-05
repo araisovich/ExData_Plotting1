@@ -20,15 +20,21 @@ dt <- dt[, !(names(dt) %in% dropcols)]
 dt <- dt[with(dt,order(dt$datetime)),]
 #open a .png file device, resolution 480x480 pixels
 png(file="plot1.png", width=480, height=480);
-#perform the plot, with red-filled boxes, x labels, and title
+#perform the plot, with red-filled boxes, x labels, and title; x/y axis ticks off,
+#to be added after the plot
 plot(hist(dt$Global_active_power), 
      xaxt="n",
+     yaxt="n",
      xlab="Global Active Power (kilowatts)", 
      main="Global Active Power", 
      xlim=c(0,8), 
      ylim=c(0,1200), 
      cex=0.8,
      col="red");
-axis(side=1, at=c(0,2,4,6));
+#add x axis ticks and scale
+axis(side=1, at=seq(from=0, to=6, by=2));
+#add y axis ticks and scale
+axis(side=2, at=seq(from=0, to=1200, by=200));
 #and close the graphics device
-dev.off()
+dev.off();
+close(dt);

@@ -17,10 +17,12 @@ dt$datetime <- strptime(paste(dt$Date,dt$Time), format="%d/%m/%Y %H:%M:%S");
 dropcols <- c("Date","Time")
 dt <- dt[, !(names(dt) %in% dropcols)]
 #then order the data frame (not strictly required)
-dt <- dt[with(dt,order(dt$datetime)),]
+#dt <- dt[with(dt,order(dt$datetime)),]
 #open a .png file device, resolution 480x480 pixels
 png(file="plot2.png", width=480, height=480);
 #perform the plot, with red-filled boxes, x labels, and title
+#perform the plot, x labels off, and title; y axis ticks off,
+#to be added after the plot
 plot(x=dt$datetime,
      y=dt$Global_active_power, 
      yaxt="n",
@@ -32,6 +34,7 @@ plot(x=dt$datetime,
      cex.lab=0.8,
      cex.axis=0.8
 );
-axis(side=2, at=c(0,2,4,6));
+#add the y axis ticks
+axis(side=2, at=seq(from=0, to=6, by=2));
 #and close the graphics device
 dev.off()

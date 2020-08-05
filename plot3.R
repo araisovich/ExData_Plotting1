@@ -20,7 +20,7 @@ dt <- dt[, !(names(dt) %in% dropcols)]
 dt <- dt[with(dt,order(dt$datetime)),]
 #open a .png file device, resolution 480x480 pixels
 png(file="plot3.png", width=480, height=480);
-#perform the plot, with red-filled boxes, x labels, and title
+#perform an empty plot, with no y axis ticks; to be added later
 plot(x=dt$datetime,
      y=rep(NA,length(dt$datetime)), 
      yaxt="n",
@@ -32,23 +32,38 @@ plot(x=dt$datetime,
      cex.lab=0.9,
      cex.axis=0.8
 );
+#add a green line plot of sub metering 1, of width 5; could not determine
+#what color the wide plot line was, so I set green.
 lines(x=dt$datetime,
-     y=dt$Sub_metering_1,
-     col="grey"
+      y=dt$Sub_metering_1,
+      col="green",
+      lwd=3
 );
+#add a black over-plot of sub metering 1, of width 1, as it appears from the
+#graphic delivered in the repo and assignment.
+lines(x=dt$datetime,
+      y=dt$Sub_metering_1,
+      col="black"
+);
+#add a red over-plot of sub metering 2, of width 1, as it appears from the
+#graphic delivered in the repo and assignment.
 lines(x=dt$datetime,
      y=dt$Sub_metering_2,
      col="red"
 );
+#add a blue over-plot of sub metering 3, of width 1, as it appears from the
+#graphic delivered in the repo and assignment.
 lines(x=dt$datetime,
      y=dt$Sub_metering_3,
      col="blue"
 );
-axis(side=2, at=c(0,10,20,30));
+#set the scale and ticks on the y axis
+axis(side=2, at=seq(from=0, to=30, by=10));
+#add a legend
 legend("topright",
        legend=colnames(dt)[5:7],
        lty=1,
-       col=c("grey","red","blue"));
+       col=c("black","red","blue"));
 #and close the graphics device
 dev.off()
 
