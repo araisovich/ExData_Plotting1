@@ -22,10 +22,13 @@ dt <- dt[with(dt,order(dt$datetime)),]
 png(file="plot1.png", width=480, height=480);
 #perform the plot, with red-filled boxes, x labels, and title
 plot(hist(dt$Global_active_power), 
+     xaxt="n",
      xlab="Global Active Power (kilowatts)", 
      main="Global Active Power", 
-     xlim=c(0,6), 
+     xlim=c(0,8), 
      ylim=c(0,1200), 
      cex=0.8,
      col="red");
+axis(side=1, at=c(0,2,4,6));
+#and close the graphics device
 dev.off()

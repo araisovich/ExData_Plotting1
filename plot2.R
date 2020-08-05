@@ -19,13 +19,19 @@ dt <- dt[, !(names(dt) %in% dropcols)]
 #then order the data frame (not strictly required)
 dt <- dt[with(dt,order(dt$datetime)),]
 #open a .png file device, resolution 480x480 pixels
-png(file="plot1.png", width=480, height=480);
+png(file="plot2.png", width=480, height=480);
 #perform the plot, with red-filled boxes, x labels, and title
-plot(hist(dt$Global_active_power), 
-     xlab="Global Active Power (kilowatts)", 
-     main="Global Active Power", 
-     xlim=c(0,6), 
-     ylim=c(0,1200), 
-     cex=0.8,
-     col="red");
+plot(x=dt$datetime,
+     y=dt$Global_active_power, 
+     yaxt="n",
+     ylab="Global Active Power (kilowatts)",
+     xlab="",
+     type="l",  #line plot
+     ylim=c(0,8),
+     pty="m",
+     cex.lab=0.8,
+     cex.axis=0.8
+);
+axis(side=2, at=c(0,2,4,6));
+#and close the graphics device
 dev.off()
