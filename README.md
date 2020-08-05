@@ -1,3 +1,8 @@
+## Week 1 plotting assignment
+
+This is the submission for the week 1 plotting exercise.
+Originally forked from [website (https://github.com/rdpeng/ExData_Plotting1)][website].
+
 ## Introduction
 
 This assignment uses data from
